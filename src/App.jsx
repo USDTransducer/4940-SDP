@@ -7,6 +7,7 @@ function App() {
 
   return (
     <div className="website">
+      <Header />
       <Navbar />
       <Chart />
       <Controls />
