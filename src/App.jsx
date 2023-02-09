@@ -13,7 +13,6 @@ function App() {
       <Controls />
       <Log />
       <Footer />
-      hhjas
     </div>
   )
 }
