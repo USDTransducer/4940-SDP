@@ -13,6 +13,7 @@ function App() {
       <Controls />
       <Log />
       <Footer />
+      huhuh
     </div>
   )
 }
