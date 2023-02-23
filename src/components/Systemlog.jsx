@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 const Systemlog = () => {
 
   return (
-    <div className="fixed inset-y-0 right-0 w-1/3 bg-gray-100">
-    <div className="px-4 py-2 font-bold text-lg border-b border-gray-200">System Log</div>
-    <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
     <div className="flex items-center justify-between mb-4">
       <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">System Log</h5>
 
@@ -43,8 +41,6 @@ const Systemlog = () => {
       </ul>
     </div>
   </div>
-</div>
-
   );
 }
 
