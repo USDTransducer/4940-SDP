@@ -1,6 +1,8 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 
+
+
 export const data = [
   [
     { type: "number", label: "x" },
@@ -30,18 +32,33 @@ export const options = {
   legend: "none",
 };
 
-export function ChartDisplay() {
+function ChartDisplay() {
   return (
-    <Chart
-      chartType="LineChart"
-      width="100%"
-      height="400px"
-      data={data}
-      options={options}
-    />
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Chart
+        chartType="LineChart"
+        width="100%"
+        height="400px"
+        data={data}
+        options={options}
+      />
+
+      <button type="button" 
+      class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+      style = {{width: "50%"}}> Last 5 Days </button>
+
+      <button type="button" 
+      class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+      style = {{width: "50%"}}> Hourly </button>
+
+      <button type="button" 
+      class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+      style = {{width: "50%"}}>Apply</button>
+
+
+    </div>
   );
 }
-
 
 export default ChartDisplay;
 
