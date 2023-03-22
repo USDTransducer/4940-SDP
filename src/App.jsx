@@ -5,7 +5,7 @@ import ChartDisplay from './components/ChartDisplay';
 import Controls from './components/Controls';
 import Sidebar from './components/Sidebar';
 import Systemlog from './components/Systemlog';
-
+import Login from './components/Login';
 function App() {
 
   return (
