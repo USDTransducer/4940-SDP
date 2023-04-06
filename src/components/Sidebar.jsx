@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'flowbite';
 
+//staging changes
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
