@@ -7,10 +7,11 @@ const MyChart = ({ dates, times, currents, types, intervals, users }) => {
 
   // Create the data table with headers and rows
   const data = [
-    ['Date/Time', 'Current', { type: 'string', role: 'tooltip' }, { type: 'string', role: 'style' }],
+    ['Date/Time', 'Current (amps)', { type: 'string', role: 'tooltip' }, { type: 'string', role: 'style' }],
     ...datetimes.map((datetime, i) => [
       datetime,
       currents[i],
+      `Reading: ${currents[i]} amps`,
       types[i] === 0
         ? `Auto (${intervals[i]}m)`
         : `Requested at ${datetime.toLocaleTimeString()} by ${users[i]}`,
