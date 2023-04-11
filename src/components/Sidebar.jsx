@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'flowbite';
+import axios from 'axios'; // import axios to make HTTP requests
+
 
 //staging changes
 const Sidebar = () => {
@@ -7,6 +9,17 @@ const Sidebar = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  }
+
+  const clearData = async () => 
+  {
+    try 
+    {
+      await axios.delete('/api/clear-data'); // Make a DELETE request to your backend API
+      alert('Data cleared successfully!');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -41,10 +54,12 @@ const Sidebar = () => {
             <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Last Cleared / # of Data Entries Stored</p>
 
 
-            <li>
-            <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear Database 
+            <div>
+            {/* rest of the component code */}
+            <button type="button" onClick={clearData} class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear Database 
             </button>
-            </li>
+            {/* rest of the component code */}
+            </div>
 
         </ul>
         <div>
