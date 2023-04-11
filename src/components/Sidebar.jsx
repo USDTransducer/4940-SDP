@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from 'flowbite';
-import axios from 'axios'; // import axios to make HTTP requests
+import axios from 'axios'; // import axios to make HTTP request
 
 
 //staging changes
@@ -11,7 +11,7 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   }
 
-  const clearData = async () => 
+  const clearDatbase = async () => 
   {
     try 
     {
@@ -56,7 +56,7 @@ const Sidebar = () => {
 
             <div>
             {/* rest of the component code */}
-            <button type="button" onClick={clearData} class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear Database 
+            <button type="button" onClick={clearDatbase} class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear Database 
             </button>
             {/* rest of the component code */}
             </div>
