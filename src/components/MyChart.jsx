@@ -20,7 +20,7 @@ const MyChart = ({ dates, times, currents, types, intervals, users }) => {
   ];
   
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
+    <div className="bg-white rounded-lg shadow-md p-4" style={{backgroundColor: "#4B5563"}}>
       <Chart
         chartType="LineChart"
         width="100%"
