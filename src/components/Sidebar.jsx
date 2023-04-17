@@ -5,11 +5,6 @@ import axios from 'axios'; // import axios to make HTTP request
 
 //staging changes
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  }
 
   const clearDatbase = async () => 
   {
@@ -21,6 +16,13 @@ const Sidebar = () => {
       console.error(error);
     }
   }
+
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => 
+  {
+    setModal (!modal)
+  }
+
 
   return (
     
@@ -40,14 +42,13 @@ const Sidebar = () => {
                 </button>
             </li>
             <p class="text-sm font-normal text-white dark:text-gray-400">Next Data Reading: 10 minutes</p>
-            
-            <li>
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">                  
-                  Change Interval
-                </button>
-            </li>
-            <p class="text-sm font-normal text-white dark:text-gray-400">Last Reading: 60 seconds</p>
 
+            <li>
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Change Interval</button>
+            </li>
+
+            <p class="text-sm font-normal text-white dark:text-gray-400">Last Reading: 60 seconds</p>
 
             <li>
             <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">                  
