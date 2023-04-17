@@ -2,7 +2,29 @@ import React, { useState } from 'react';
 import { Modal } from 'flowbite';
 import axios from 'axios'; // import axios to make HTTP request
 
+function ChangeIntervalButton() {
+  const [modalVisible, setModalVisible] = useState(false);
 
+  function handleClick() {
+    setModalVisible(true);
+  }
+
+  return (
+    <>
+      <button type="button" onClick={handleClick}>Change Interval</button>
+      {modalVisible &&
+        <div className="modal">
+          <form>
+            <label htmlFor="intervalInput">Enter a new interval:</label>
+            <input type="text" id="intervalInput" />
+            <button type="submit">Submit</button>
+            <button type="cancel">Cancel</button>
+          </form>
+        </div>
+      }
+    </>
+  );
+}
 //staging changes
 const Sidebar = () => {
 
@@ -45,7 +67,7 @@ const Sidebar = () => {
 
             <li>
             <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              Change Interval</button>
+              <ChangeIntervalButton> Change interval </ChangeIntervalButton></button>
             </li>
 
             <p class="text-sm font-normal text-white dark:text-gray-400">Last Reading: 60 seconds</p>
