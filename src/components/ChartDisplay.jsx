@@ -42,7 +42,11 @@ const ChartDisplay = () => {
         layout: {
           autoPadding: true,
         },
-        scales: { x: { title: { display: false, text: "Days of the week" }, ticks: { maxTicksLimit: 10 } }, y: { title: { display: true, text: "Current reading (amps)" } } },
+        scales: 
+        { x: 
+          { title: { display: false, text: "Days of the week" }, ticks: { maxTicksLimit: 10 } }, 
+        y: 
+          { title: { display: true, text: "Current reading (amps)" }, } },
         animation: false,
         plugins: {
           legend: {
@@ -107,7 +111,7 @@ const ChartDisplay = () => {
       <div className="w-full md:w-3/4 flex justify-between">
         <div className="flex flex-col items-center">
           <p className="text-sm font-medium text-gray-700 mb-1">Zoom</p>
-          <input type="range" min={0} max={100} value={sliderValue} onChange={handleSliderChange} className="w-full h-4 rounded-full bg-gray-300 appearance-none outline-none" />
+          <input type="range" min={0} max={99} value={sliderValue} onChange={handleSliderChange} className="w-full h-4 rounded-full bg-gray-300 appearance-none outline-none" />
         </div>
         <div className="flex flex-col items-center">
           <p className="text-sm font-medium text-gray-700 mb-1">Pan</p>

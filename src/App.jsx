@@ -6,8 +6,26 @@ import Controls from './components/Controls';
 import Sidebar from './components/Sidebar';
 import Systemlog from './components/Systemlog';
 import Login from './components/Login';
+import { useEffect } from 'react';
+
+// client_id: "1061531809258-v4845u688g64cv91f56jcm2m9et9k8p7.apps.googleusercontent.com"
 function App() {
-//bg-gray-300
+  function hcbResponse(response){
+    console.log("JTW",response.credential)
+  }
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: "1061531809258-v4845u688g64cv91f56jcm2m9et9k8p7.apps.googleusercontent.com",
+      callback: hcbResponse
+    })
+  
+    google.accounts.id.renderButton(
+      document.getElementById("signDiv"),
+      {theme:"outline",size:"medium"}
+    );
+  }, []);
+  
   return (
     <div className="website" style={{ backgroundColor: "#111827" }}>
       <Navbar />
