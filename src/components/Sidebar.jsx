@@ -5,17 +5,19 @@ import axios from 'axios'; // import axios to make HTTP request
 //staging changes
 const Sidebar = () => {
 
-  const clearDatbase = async () => 
-  {
-    try 
-    {
-      await axios.delete('/api/clear-data'); // Make a DELETE request to your backend API
-      alert('Data cleared successfully!');
-    } catch (error) {
-      console.error(error);
+  const clearDatbase = async () => {
+    const confirmDelete = window.confirm('Are you sure you want to clear the database? This action cannot be undone.');
+    if (confirmDelete) {
+      try {
+        await axios.delete('https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f/type/*'); // Make a DELETE request to your backend API
+        alert('Data cleared successfully!');
+      } catch (error) {
+        console.error(error);
+        alert('Data not cleared, error')
+      }
     }
   }
-
+  
   const [modal, setModal] = useState(false);
   const toggleModal = () => 
   {

@@ -9,7 +9,7 @@ const ChartDisplay = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://sheet.best/api/sheets/794f1ec2-1029-4bb3-94cb-34e96fe5a0cd");
+      const response = await fetch("https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f");
       const data = await response.json();
       const labels = data.map((row) => row.date);
       const time = data.map((row) => row.time);
