@@ -37,6 +37,10 @@ function App() {
       {theme:"outline",size:"medium"}
     );
   }, []);
+
+  useEffect(() => {
+    console.log("User update:", user);
+  }, [user]);
   
   return (
     <div className="website" style={{ backgroundColor: "#111827" }}>
