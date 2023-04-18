@@ -19,6 +19,7 @@ function Navbar({ user, signOut }) {
               </button>
             </div>
           ) : (
+            <>
             <div className="flex items-center">
               <span className="mr-3 text-gray-600">Signed in as {user.name}</span>
               <button onClick={(e) => signOut(e)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow flex items-center">
@@ -28,6 +29,7 @@ function Navbar({ user, signOut }) {
                 <span className="text-gray-600">Sign out</span>
               </button>
             </div>
+            </>
           )}
         <button data-collapse-toggle="navbar-dropdown" type="button" className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
           <span className="sr-only">Open main menu</span>
