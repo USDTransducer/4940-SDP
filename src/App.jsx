@@ -13,25 +13,31 @@ function App() {
     var uObject = jwt_decode(response.credential);
     setUser(uObject);
     console.log("Logging in User: ", uObject);
-    document.getElementById("signDiv").hidden = true;
   }
   
   function signOut(event){
     console.log("Logging out User: ", user);
     setUser({});
-    document.getElementById("signDiv").hidden = false;
+    google.accounts.id.disableAutoSelect();
+    google.accounts.id.prompt();
   }
   
   useEffect(() => {
     google.accounts.id.initialize({
       client_id: "1061531809258-v4845u688g64cv91f56jcm2m9et9k8p7.apps.googleusercontent.com",
-      callback: hcbResponse
+      callback: hcbResponse,
+      auto_select: false
     })
   
-    google.accounts.id.renderButton(
-      document.getElementById("signDiv"),
-      {theme:"outline",size:"medium"}
-    );
+    google.accounts.id.prompt();
+  
+    google.accounts.id.subscribe((response) => {
+      if (response.status === "OK") {
+        var uObject = jwt_decode(response.credential);
+        setUser(uObject);
+        console.log("Logging in User: ", uObject);
+      }
+    })
   }, []);
 
   useEffect(() => {
@@ -42,12 +48,15 @@ function App() {
     <div className="website" style={{ backgroundColor: "#111827" }}>
       <Navbar />
       <div className="flex flex-col md:flex-row px-10" style={{ height: "100vh" , backgroundColor: "#111827"}}>
-        <div className='md:basis-1/4 px-4' style={{maxWidth: '50%', margin: 50, height: 50}}> <Sidebar user={user} signOut={signOut}/> </div>
+        <div className='md:basis-1/4 px-4' style={{maxWidth: '50%', margin: 50, height: 50}}> 
+          {user.email ? <button onClick={signOut}>Sign out</button> : null}
+        </div>
         <div className='md:basis-1/2 px-4 mr-4 md:mr-0' style={{ maxWidth: '100%', margin: 'auto' }}> <ChartDisplay /> </div>
         <div className='md:basis-1/4 px-4'style={{maxWidth: '50%', margin: 50, height: 50}}> <Systemlog /> </div>
       </div>
     </div>
   )
 }
+
 
 export default App
