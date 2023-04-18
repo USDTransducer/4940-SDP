@@ -1,32 +1,28 @@
 import React from 'react';
-import Chart from 'react-google-charts'
 import Navbar from './components/Navbar';
 import ChartDisplay from './components/ChartDisplay';
-import Controls from './components/Controls';
 import Sidebar from './components/Sidebar';
 import Systemlog from './components/Systemlog';
-import Login from './components/Login';
 import { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 
-// client_id: "1061531809258-v4845u688g64cv91f56jcm2m9et9k8p7.apps.googleusercontent.com"
 function App() {
   const [user, setUser] = useState({});
 
   function hcbResponse(response){
-    //console.log("JTW",response.credential);
     var uObject = jwt_decode(response.credential);
     setUser(uObject);
-    console.log("Logging in User: ", user);
+    console.log("Logging in User: ", uObject);
     document.getElementById("signDiv").hidden = true;
   }
+  
   function signOut(event){
     console.log("Logging out User: ", user);
     setUser({});
     document.getElementById("signDiv").hidden = false;
   }
+  
   useEffect(() => {
-    /* global google */
     google.accounts.id.initialize({
       client_id: "1061531809258-v4845u688g64cv91f56jcm2m9et9k8p7.apps.googleusercontent.com",
       callback: hcbResponse
