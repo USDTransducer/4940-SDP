@@ -14,12 +14,14 @@ function App() {
   const [user, setUser] = useState({});
 
   function hcbResponse(response){
-    console.log("JTW",response.credential);
+    //console.log("JTW",response.credential);
     var uObject = jwt_decode(response.credential);
     setUser(uObject);
+    console.log("Logging in User: ", user);
     document.getElementById("signDiv").hidden = true;
   }
   function signOut(event){
+    console.log("Logging out User: ", user);
     setUser({});
     document.getElementById("signDiv").hidden = false;
   }

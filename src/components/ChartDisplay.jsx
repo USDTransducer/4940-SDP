@@ -18,7 +18,7 @@ const ChartDisplay = () => {
       const interval = data.map((row) => row.interval);
       const user = data.map((row) => row.user);
       setChartData({ labels, time, values, type, interval, user });
-      console.log({ labels, time, values, type, interval, user })
+      // console.log({ labels, time, values, type, interval, user })
     };
     fetchData();
   }, []);
@@ -34,7 +34,7 @@ const ChartDisplay = () => {
     const pointBackgroundColor = chartData.type.map((t) => {
       return t === '0' ? 'red' : 'blue';
     });
-    console.log("CD",chartData.type);
+    //console.log("CD",chartData.type);
     chartRef.current = new Chart("CurrentChart", {
       type: "line",
       data: { labels, datasets: [{label: "Current: ", data: values, borderColor: "rgb(75, 192, 192)", tension: 0.1,pointBackgroundColor: pointBackgroundColor}] },
@@ -75,8 +75,8 @@ const ChartDisplay = () => {
               {
                 const dex = context.dataIndex;
                 let footer = '';
-                console.log("Time",chartData.time);
-                console.log("index",dex)
+                // console.log("Time",chartData.time);
+                // console.log("index",dex)
                 footer += "time = "
                 footer += chartData.time[dex];
                 return footer;
