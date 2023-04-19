@@ -13,13 +13,13 @@ function App() {
     var uObject = jwt_decode(response.credential);
     setUser(uObject);
     console.log("Logging in User: ", uObject);
-    document.getElementById("signDiv").hidden = true;
+    document.getElementById("signInButton").hidden = true;
   }
   
   function signOut(event){
     console.log("Logging out User: ", user);
     setUser({});
-    document.getElementById("signDiv").hidden = false;
+    document.getElementById("signInButton").hidden = false;
   }
   
   useEffect(() => {
@@ -29,7 +29,7 @@ function App() {
     })
   
     google.accounts.id.renderButton(
-      document.getElementById("signDiv"),
+      document.getElementById("signInButton"),
       {theme:"outline",size:"medium"}
     );
   }, []);
