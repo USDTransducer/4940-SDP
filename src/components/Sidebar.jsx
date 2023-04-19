@@ -1,23 +1,72 @@
 import React, { useState } from 'react';
-import { Modal } from 'flowbite';
 import axios from 'axios'; // import axios to make HTTP request
 
 //staging changes
-const Sidebar = () => {
+const Sidebar = ({user}) => {
+
+  const command_sheet = "https://sheet.best/api/sheets/eeff728c-9803-48ef-ab43-cb89a20a8ad1"
+  const data_sheet = "https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f"
 
   const clearDatbase = async () => {
     const confirmDelete = window.confirm('Are you sure you want to clear the database? This action cannot be undone.');
     if (confirmDelete) {
       try {
-        await axios.delete('https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f/type/*'); // Make a DELETE request to your backend API
+        await axios.delete(data_sheet + "/type/*"); // Delete
         alert('Data cleared successfully!');
+        try{
+          await axios.post(command_sheet,
+            {
+              'date': new Date().toLocaleDateString(),
+              'time': new Date().toLocaleTimeString(),
+              'type': '2',
+              'interval': '-24',
+              'user': user.name,
+          })
+        }
+        catch (error){
+          console.error(error);
+          alert('Not logged error: ' + error);
+        }
       } catch (error) {
         console.error(error);
         alert('Data not cleared, error: ' + error);
       }
+      location.reload();
     }
   }
-  
+  const getReading = async () => {
+      try {
+        console.log("user",user);
+        await axios.post(command_sheet,
+        {
+            'date': new Date().toLocaleDateString(),
+            'time': new Date().toLocaleTimeString(),
+            'type': '-1',
+            'interval': '-24',
+            'user': user.name,
+        })
+      } catch (error) {
+        console.error(error);
+        alert('Reading not taken error: ' + error);
+      }
+      //location.reload();
+  }
+  const changeInterval = async () => {
+      try {
+        await axios.post(command_sheet,
+        {
+            'date': new Date().toLocaleDateString(),
+            'time': new Date().toLocaleTimeString(),
+            'type': '1',
+            'interval': '100',
+            'user': user.name,
+        })
+      } catch (error) {
+        console.error(error);
+        alert('Interval not changed error: ' + error);
+      }
+      location.reload();
+  }
   const [modal, setModal] = useState(false);
   const toggleModal = () => 
   {
@@ -85,7 +134,7 @@ const Sidebar = () => {
             <p class="text-sm font-normal text-white dark:text-gray-400">Last Reading: 60 seconds</p>
 
             <li>
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">                  
+            <button type="button" onClick={getReading} class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">                  
                   Get Reading
                 </button>
             </li>
