@@ -44,7 +44,7 @@ const Sidebar = ({ user }) => {
         setTotal(rows.length);
   
         // Calculate time until next reading
-        const intervalInSeconds = rowsint.slice(-1)[0];
+        const intervalInSeconds = expected_interval.slice(-1)[0];
         const intervalInMinutes = intervalInSeconds / 60;
         const timeUntilNextReadingInMinutes = intervalInMinutes - minutesDiff % intervalInMinutes;
         const timeUntilNextReadingInHours = timeUntilNextReadingInMinutes / 60;
