@@ -64,7 +64,7 @@ const Systemlog = () => {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <div className="max-h-80 overflow-y-scroll scrollbar-thumb-rounded scrollbar-track-gray-500 scrollbar-thumb-gray-700">
+          <div className="max-h-80 overflow-y-scroll scrollbar-thumb-rounded scrollbar-track-gray-500 scrollbar-thumb-gray-700" style={{ scrollbarWidth: "none" }}>
             {Object.keys(groupedLogs).slice(0, 10).map((date) => {
               const logs = groupedLogs[date];
               let count = 0;
@@ -76,16 +76,13 @@ const Systemlog = () => {
               const isExpanded = expandedRows.includes(date);
               return (
                 <div key={date} className="mb-4">
-                  <button
-                    onClick={() => handleToggleRow(date)}
-                    className="w-full py-3 text-white font-medium hover:text-gray-400 text-center border border-gray-400 rounded-md focus:outline-none flex flex-col justify-center"
+                  <div
+                    className="w-full py-3 text-white font-medium text-center border border-gray-400 rounded-md focus:outline-none flex flex-col justify-center"
                     style={{ backgroundColor: '#4a5568' }}
                   >
-                    <div>{date}</div>
-                    <div>({count})</div>
-                    <div>{isExpanded ? '-' : '+'}</div>
-                  </button>
-                  <div className={isExpanded ? "max-h-58 overflow-y-scroll bg-gray-700 rounded-md p-4" : "hidden"}>
+                    <div><button onClick={() => handleToggleRow(date)} title="click to "> {date} ({count}) {isExpanded ? '-' : ''} </button> </div>
+                  </div>
+                  <div className={isExpanded ? "max-h-58 hover:text-blue-600 bg-gray-700 rounded-md p-4" : "hidden"}>
                     {logs.map((log, index) => {
                       const message = getMessage(log);
                       if (message === '') {
