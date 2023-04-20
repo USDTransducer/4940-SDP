@@ -63,7 +63,6 @@ function App() {
         </div>
       ) : (
         <div className="flex flex-col" style={{ height: "100vh" }}>
-          <Navbar user={user} signOut={signOut} />
           <ChartDisplay />
         </div>
       )}

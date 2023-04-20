@@ -1,22 +1,25 @@
 import React from 'react';
 
 function Navbar({ user, signOut }) {
-
-  function GoogleButton({ user, signOut }) {
-    return user.email ? (
-      <>
-        <span className="text-white mr-4">{user.email}</span>
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          onClick={signOut}
-        >
-          Sign Out
-        </button>
-      </>
-    ) : (
-      <div id="signInButton"></div>
-    );
-  }
+    function GoogleButton({ user, signOut }) {
+        return (
+          <>
+            {user.email ? (
+              <>
+                <span className="text-white mr-4">{user.email}</span>
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={signOut}
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+                <div id="signInButton"></div>
+            )}
+          </>
+        );
+      }
 
   return (
     <nav className="px-2 py-1 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700" style={{ backgroundColor: "#1F2937" }}>
