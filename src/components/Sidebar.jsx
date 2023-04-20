@@ -5,8 +5,8 @@ import Chart from "chart.js/auto";
 
 //staging changes
 const Sidebar = ({ user }) => {
-  const command_sheet = '1https://sheet.best/api/sheets/eeff728c-9803-48ef-ab43-cb89a20a8ad1';
-  const data_sheet = '1https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f';
+  const command_sheet = 'https://sheet.best/api/sheets/eeff728c-9803-48ef-ab43-cb89a20a8ad1';
+  const data_sheet = 'https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f';
 
   const [uptime, setUpTime] = useState([]);
   const [nextReading, setTimeUntilNextReading] = useState([]);
