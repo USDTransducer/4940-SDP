@@ -56,7 +56,7 @@ const Systemlog = () => {
   const groupedLogs = groupLogsByDate(logData);
 
   return (
-    <div className="Sidebar w-full max-w-sm p-4 border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700" style={{backgroundColor: "#4B5563"}} >
+    <div className="Sidebar w-full max-w-sm p-4 border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700" style={{ backgroundColor: "#4B5563" }}>
       <h5 className="mb-3 text-base font-semibold text-white md:text-xl dark:text-white text-center">
         System log <a href="#" className="inline-flex items-center text-blue-600 hover:underline"></a>
       </h5>
@@ -78,13 +78,12 @@ const Systemlog = () => {
                 <div key={date} className="mb-4">
                   <button
                     onClick={() => handleToggleRow(date)}
-                    className="w-full py-3 text-white font-medium hover:text-gray-400 text-center border border-gray-400 rounded-md focus:outline-none"
+                    className="w-full py-3 text-white font-medium hover:text-gray-400 text-center border border-gray-400 rounded-md focus:outline-none flex flex-col justify-center"
                     style={{ backgroundColor: '#4a5568' }}
                   >
-                    <div className="flex items-center justify-between">
-                      <div>{date} ({count})</div>
-                      <div className="ml-2">{isExpanded ? '-' : '+'}</div>
-                    </div>
+                    <div>{date}</div>
+                    <div>({count})</div>
+                    <div>{isExpanded ? '-' : '+'}</div>
                   </button>
                   <div className={isExpanded ? "max-h-58 overflow-y-scroll bg-gray-700 rounded-md p-4" : "hidden"}>
                     {logs.map((log, index) => {
@@ -109,7 +108,7 @@ const Systemlog = () => {
         )}
       </div>
     </div>
-  );      
+  );  
 }
   
 export default Systemlog
