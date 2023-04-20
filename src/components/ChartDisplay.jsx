@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import Chart from "chart.js/auto";
+import { Chart } from "chart.js/auto";
+import zoomPlugin from 'chartjs-plugin-zoom';
 
 const ChartDisplay = () => {
   const [chartData, setChartData] = useState(null);
-  const [sliderValue, setSliderValue] = useState(50);
-  const [panningValue, setPanningValue] = useState(100);
+  const [chartWidth, setChartWidth] = useState(null);
+  const [chartHeight, setChartHeight] = useState(null);
   const chartRef = useRef(null);
+  Chart.register(zoomPlugin);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,105 +20,118 @@ const ChartDisplay = () => {
       const interval = data.map((row) => row.interval);
       const user = data.map((row) => row.user);
       setChartData({ labels, time, values, type, interval, user });
-      // console.log({ labels, time, values, type, interval, user })
     };
     fetchData();
   }, []);
 
   useEffect(() => {
+    const chartBox = document.querySelector('.chartbox');
+    setChartWidth(chartBox.clientWidth);
+    setChartHeight(chartBox.clientHeight);
+  
+    const resizeObserver = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      setChartWidth(width);
+      setChartHeight(height);
+      chartRef.current.update()
+    });
+  
+    resizeObserver.observe(chartBox);
+  }, []);
+  
+  useEffect(() => {
     if (!chartData) return;
     if (chartRef.current) chartRef.current.destroy();
-    const numDataPoints = Math.floor((1 - sliderValue / 100) * chartData.labels.length);
-    const startIndex = Math.floor((panningValue / 100) * (chartData.labels.length - numDataPoints));
-    const endIndex = startIndex + numDataPoints;
-    const labels = chartData.labels.slice(startIndex, endIndex);
-    const values = chartData.values.slice(startIndex, endIndex);
+    const labels = chartData.labels;
+    const values = chartData.values;
     const pointBackgroundColor = chartData.type.map((t) => {
       return t === '0' ? 'red' : 'blue';
     });
-    //console.log("CD",chartData.type);
-    chartRef.current = new Chart("CurrentChart", {
-      type: "line",
-      data: { labels, datasets: [{label: "Current: ", data: values, borderColor: "rgb(75, 192, 192)", tension: 0.1,pointBackgroundColor: pointBackgroundColor}] },
-      options: {
-        layout: {
-          autoPadding: true,
-        },
-        scales: 
-        { x: 
-          { title: { display: false, text: "Days of the week" }, ticks: { maxTicksLimit: 10 } }, 
-        y: 
-          { title: { display: true, text: "Current reading (amps)" }, } },
-        animation: false,
-        plugins: {
-          legend: {
-            display: false,
+    
+    // wait until chartWidth and chartHeight have been updated before rendering the chart
+    if (chartWidth && chartHeight) {
+      chartRef.current = new Chart("CurrentChart", {
+        type: "line",
+        data: { labels, datasets: [{label: "Current: ", data: values, borderColor: "rgb(75, 192, 192)", tension: 0.1,pointBackgroundColor: pointBackgroundColor}] },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            autoPadding: true,
           },
-          tooltip: {
-            enabled: true,
-            usePointStyle: true,
-            callbacks: {
-              label: function(context) {
-                const dex = context.dataIndex;
-                let label = context.dataset.label;
-                label += chartData.values[dex];
-                if (chartData.type[dex] === '0') {
-                    label += "\n Requested by ";
-                    label+= chartData.user[dex];
-                }
-                else{
-                  label += ", every "
-                  label += chartData.interval[dex]
-                  label += "m"
-                }
-                return label;
+          scales: 
+          { x: 
+            { title: { display: false, text: "Days of the week" }, ticks: { maxTicksLimit: 10 } }, 
+          y: 
+            { title: { display: true, text: "Current reading (amps)" }, } },
+          animation: false,
+          plugins: {
+            zoom: {
+              zoom:{
+                wheel:{
+                  enabled: true,
+                },
+                pinch:{
+                  enabled:true,
+                },
+                mode: 'xy',
               },
-              afterLabel: function(context)
-              {
-                const dex = context.dataIndex;
-                let footer = '';
-                // console.log("Time",chartData.time);
-                // console.log("index",dex)
-                footer += "time = "
-                footer += chartData.time[dex];
-                return footer;
+              pan:{
+                enabled:true,
+                mode: 'xy',              
               },
-              labelPointStyle: function(context)
-              {
-                if (chartData.type[context.dataIndex] === 0)
+            },
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              enabled: true,
+              usePointStyle: true,
+              callbacks: {
+                label: function(context) {
+                  const dex = context.dataIndex;
+                  let label = context.dataset.label;
+                  label += chartData.values[dex];
+                  if (chartData.type[dex] === '0') {
+                      label += "\n Requested by ";
+                      label+= chartData.user[dex];
+                  }
+                  else{
+                    label += ", every "
+                    label += chartData.interval[dex]
+                    label += "m"
+                  }
+                  return label;
+                },
+                afterLabel: function(context)
                 {
-                  return {
-                    pointStyle: 'triangle',
-                    rotation: 0,
-                  };
+                  const dex = context.dataIndex;
+                  let footer = '';
+                  footer += "time = "
+                  footer += chartData.time[dex];
+                  return footer;
+                },
+                labelPointStyle: function(context)
+                {
+                  if (chartData.type[context.dataIndex] === 0)
+                  {
+                    return {
+                      pointStyle: 'triangle',
+                      rotation: 0,
+                    };
+                  }
                 }
+               }
               }
-             }
             }
           }
-        }
-
-    });
-  }, [chartData, sliderValue, panningValue]);
-
-  const handleSliderChange = (event) => setSliderValue(event.target.value);
-
-  const handlePanningChange = (event) => setPanningValue(event.target.value);
-
+  
+      });
+    }
+  }, [chartData, chartWidth, chartHeight]);
   return (
     <div className="flex flex-col items-center">
       <div className="w-full md:w-3/4 mb-8">
-        <canvas id="CurrentChart" width="400" height="400"></canvas>
-      </div>
-      <div className="w-full md:w-3/4 flex justify-between">
-        <div className="flex flex-col items-center">
-          <p className="text-sm font-medium text-gray-700 mb-1">Zoom</p>
-          <input type="range" min={0} max={99} value={sliderValue} onChange={handleSliderChange} className="w-full h-4 rounded-full bg-gray-300 appearance-none outline-none" />
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-sm font-medium text-gray-700 mb-1">Pan</p>
-          <input type="range" min={0} max={100} value={panningValue} onChange={handlePanningChange} className="w-full h-4 rounded-full bg-gray-300 appearance-none outline-none" />
-        </div>
+        <div className="chartbox"> <canvas id="CurrentChart" width="400" height="400"></canvas> </div>
       </div>
     </div>
   );
