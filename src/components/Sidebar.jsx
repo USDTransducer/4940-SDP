@@ -33,6 +33,7 @@ const Sidebar = ({ user }) => {
         const secondsDiff = Math.floor((timeDiff % (60 * 1000)) / 1000);
         const timeSinceLastEntry = `${hoursDiff} hours, ${minutesDiff} minutes`;
         setTimeSinceLastEntry(timeSinceLastEntry);
+        setTotal(rows.length);
         console.log("Time since last entry:", timeSinceLastEntry);
       } catch (error) {
         console.error(error);
@@ -167,7 +168,7 @@ const Sidebar = ({ user }) => {
                   Get Reading
                 </button>
             </li>
-            <p class="text-sm font-normal text-white dark:text-gray-400"> {}</p>
+            <p class="text-sm font-normal text-white dark:text-gray-400"> Total readings: {rows.length}</p>
             <div>
             <button type="button" onClick={clearDatbase} class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
               Clear Database 
