@@ -130,8 +130,8 @@ const ChartDisplay = () => {
   }, [chartData, chartWidth, chartHeight]);
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full md:w-3/4 mb-8">
-        <div className="chartbox"> <canvas id="CurrentChart" width="400" height="400"></canvas> </div>
+      <div className="w-full md:w-1/8 mb-8">
+        <div className="chartbox"> <canvas id="CurrentChart" width="600" height="650"></canvas> </div>
       </div>
     </div>
   );

@@ -54,20 +54,44 @@ function App() {
 
   return (
     <div className="website" style={{ backgroundColor: "#111827" }}>
-    <Navbar user={user} signOut={signOut} />
-      {user.sub ? (
-        <div className="flex flex-col md:flex-row px-10" style={{ height: "100vh" , backgroundColor: "#111827"}}>
-          <div className='md:basis-1/4 px-4' style={{maxWidth: '50%', margin: 50, height: 50}}> <Sidebar user={user}/> </div>
-          <div className='md:basis-1/2 px-4 mr-4 md:mr-0' style={{ maxWidth: '100%', margin: 'auto' }}> <ChartDisplay /> </div>
-          <div className='md:basis-1/4 px-4'style={{maxWidth: '50%', margin: 50, height: 50}}> <Systemlog /> </div>
+      <Navbar user={user} signOut={signOut} />
+      {!user.sub ? (
+        <div className="flex flex-col md:flex-row px-10" style={{ height: "100vh", backgroundColor: "#111827" }}>
+        <div className='md:basis-1/4 px-6' style={{ maxWidth: '40%', margin: 50, height: 50 }}> <Sidebar user={user} /> </div>
+          <div className='md:basis-1/2 px-0 mr-4 md:mr-0' style={{ maxWidth: '100%', margin: 70 }}> <ChartDisplay /> </div>
+          <div className='md:basis-1/4 px-1' style={{ maxWidth: '40%', margin: 50, height: 50 }}> <Systemlog /> </div>
         </div>
       ) : (
         <div className="flex flex-col" style={{ height: "100vh" }}>
           <ChartDisplay />
         </div>
       )}
+
+      <style>
+        {`
+          /* Adjust layout for mobile */
+          @media (max-width: 768px) {
+            .website {
+              display: flex;
+              flex-direction: column;
+            }
+            .flex-col-reverse {
+              flex-direction: column-reverse;
+            }
+            .website > div:not(:first-child) {
+              margin-top: 20px;
+            }
+            .md:basis-1\/4 {
+              width: 100%;
+            }
+            .px-10 {
+              padding: 0;
+            }
+          }
+        `}
+      </style>
     </div>
-  )
+  );
 }
 
 export default App;
