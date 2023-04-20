@@ -10,8 +10,11 @@ function Modal({sendInterval}) {
     let seconds = 0;
     if (timeUnit === 'minutes') {
       seconds = parseInt(timeValue) * 60;
-    } else {
+    } else if (timeUnit === 'hours'){
       seconds = parseInt(timeValue) * 3600;
+    }
+    else{
+        seconds = seconds;
     }
     setConvertedValue(seconds);
     setShowModal(false);
@@ -50,6 +53,7 @@ function Modal({sendInterval}) {
                   onChange={(e) => setTimeUnit(e.target.value)}
                   className="form-select mt-1 block w-full text-center rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
                 >
+                  <option value="seconds">Seconds</option>
                   <option value="minutes">Minutes</option>
                   <option value="hours">Hours</option>
                 </select>
