@@ -3,11 +3,11 @@ import Navbar from './components/Navbar';
 import ChartDisplay from './components/ChartDisplay';
 import Sidebar from './components/Sidebar';
 import Systemlog from './components/Systemlog';
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useRef } from "react";
 import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
 import GoogleButton from 'react-google-button';
-
+import Chart from "chart.js/auto";
 function App() {
   const [user, setUser] = useState({});
 

@@ -1,11 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // import axios to make HTTP request
+import Chart from "chart.js/auto";
 
 //staging changes
-const Sidebar = ({user}) => {
+const Sidebar = ({ user }) => {
+  const command_sheet = 'https://sheet.best/api/sheets/eeff728c-9803-48ef-ab43-cb89a20a8ad1';
+  const data_sheet = 'https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f';
 
-  const command_sheet = "https://sheet.best/api/sheets/eeff728c-9803-48ef-ab43-cb89a20a8ad1"
-  const data_sheet = "https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f"
+  const [uptime, setUpTime] = useState([]);
+  const [nextReading, setNextReading] = useState([]);
+  const [lastReading, setLastReading] = useState([]);
+  const [total, setTotal] = useState([]);
+  const [timeSinceLastEntry, setTimeSinceLastEntry] = useState(null);
+
+  useEffect(() => {
+    const fetchLogData = async () => {
+      try {
+        const response = await fetch("https://sheet.best/api/sheets/db0f2840-a783-4a03-999d-3aafd2b3539f");
+        const data = await response.json();
+        const rows = data.map((row) => row.time);
+        const rowsint = data.map((row) => row.interval);
+        const lastTime = rows.slice(-1)[0];
+        const lastInt = rowsint.slice(-1)[0];
+        const [hours, minutes, seconds] = lastTime.split(':');
+        const dateObj = new Date();
+        dateObj.setHours(hours, minutes, seconds);
+        setLastReading(dateObj);
+        const currentTime = new Date();
+        const timeDiff = Math.abs(currentTime - dateObj);
+        const hoursDiff = Math.floor(timeDiff / (60 * 60 * 1000));
+        const minutesDiff = Math.floor((timeDiff % (60 * 60 * 1000)) / (60 * 1000));
+        const secondsDiff = Math.floor((timeDiff % (60 * 1000)) / 1000);
+        const timeSinceLastEntry = `${hoursDiff} hours, ${minutesDiff} minutes`;
+        setTimeSinceLastEntry(timeSinceLastEntry);
+        console.log("Time since last entry:", timeSinceLastEntry);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchLogData();
+  }, []);
+  
 
   const clearDatbase = async () => {
     const confirmDelete = window.confirm('Are you sure you want to clear the database? This action cannot be undone.');
@@ -49,7 +84,7 @@ const Sidebar = ({user}) => {
         console.error(error);
         alert('Reading not taken error: ' + error);
       }
-      //location.reload();
+      location.reload();
   }
   const changeInterval = async () => {
       try {
@@ -126,13 +161,13 @@ const Sidebar = ({user}) => {
                 </div>
             </div> 
             </li>
-            <p class="text-sm font-normal text-white dark:text-gray-400">Last Reading: 60 seconds</p>
+            <p class="text-sm font-normal text-white dark:text-gray-400">Last Reading: {timeSinceLastEntry} </p>
             <li>
             <button type="button" onClick={getReading} class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">                  
                   Get Reading
                 </button>
             </li>
-            <p class="text-sm font-normal text-white dark:text-gray-400">Last Cleared / # of Data Entries Stored</p>
+            <p class="text-sm font-normal text-white dark:text-gray-400"> {}</p>
             <div>
             <button type="button" onClick={clearDatbase} class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
               Clear Database 
