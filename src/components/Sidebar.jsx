@@ -43,7 +43,7 @@ const Sidebar = ({ user }) => {
         setTimeSinceLastEntry(timeSinceLastEntry);
         setTotal(rows.length);
   
-        // Calculate time until next reading
+        // Calculate time until next 
         const intervalInSeconds = expected_interval.slice(-1)[0];
         const intervalInMinutes = intervalInSeconds / 60;
         const timeUntilNextReadingInMinutes = intervalInMinutes - minutesDiff % intervalInMinutes;
@@ -85,7 +85,7 @@ const Sidebar = ({ user }) => {
               'date': new Date().toLocaleDateString(),
               'time': new Date().toLocaleTimeString(),
               'type': '2',
-              'interval': '-24',
+              'interval': lastInterval,
               'user': user.name,
           })
         }
@@ -108,7 +108,7 @@ const Sidebar = ({ user }) => {
             'date': new Date().toLocaleDateString(),
             'time': new Date().toLocaleTimeString(),
             'type': '-1',
-            'interval': '-24',
+            'interval': lastInterval,
             'user': user.name,
         })
       } catch (error) {

@@ -14,7 +14,7 @@ function Modal({sendInterval}) {
       seconds = parseInt(timeValue) * 3600;
     }
     else{
-        seconds = seconds;
+        seconds = timeValue;
     }
     setConvertedValue(seconds);
     setShowModal(false);

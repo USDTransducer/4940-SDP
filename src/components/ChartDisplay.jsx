@@ -58,9 +58,13 @@ const ChartDisplay = () => {
           layout: {
             autoPadding: true,
           },
-          scales: 
-          { x: 
-            { title: { display: false, text: "Days of the week" }, ticks: { maxTicksLimit: 10 } }, 
+          scales: {
+            x: {
+              title: { display: false, text: "Days of the week" },
+              min: 0,        // set the minimum value of the x-axis to 0
+              max: 30,       // set the maximum value of the x-axis to 30
+              ticks: { maxTicksLimit: 10 }
+            },
           y: 
             { title: { display: true, text: "Current reading (amps)" }, } },
           animation: false,
@@ -73,11 +77,11 @@ const ChartDisplay = () => {
                 pinch:{
                   enabled:true,
                 },
-                mode: 'xy',
+                mode: 'x',
               },
               pan:{
                 enabled:true,
-                mode: 'xy',              
+                mode: 'x',              
               },
             },
             legend: {
