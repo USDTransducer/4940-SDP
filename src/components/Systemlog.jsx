@@ -31,23 +31,6 @@ const Systemlog = () => {
     }, {});
   };
 
-  /*
-  const getMessage = (log) => {
-    const { date, time, type, interval, user} = log;
-    switch (type) {
-      case '-1':
-        return <p><span className="text-blue-500">{time}</span>: Reading requested by {user} </p>;
-      case '1':
-        return <p><span className="text-blue-500">{time}</span>: Interval changed to {interval} by {user}</p>;
-      case '2':
-        return <p><span className="text-blue-500">{time}</span>: Database cleared by {user}</p>;
-      default:
-        return '';
-    }
-  };
-
-  */
-
   const getMessage = (log) => {
     const { date, time, type, interval, user } = log;
     switch (type) {

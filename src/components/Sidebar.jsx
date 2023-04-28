@@ -27,9 +27,26 @@ const Sidebar = ({ user }) => {
         const rowsint = data.map((row) => row.interval);
         const expected_interval = data_command.map((row) => row.interval);
         const interval_updatedAt = data_command.map((row)=> row.time);
+        const lastTime = rows.slice(-1)[0];  
 
-        const lastTime = rows.slice(-1)[0];
-        setLastInterval(expected_interval.slice(-1)[0]);
+        let intervalText;
+        switch (true) {
+          case expected_interval.slice(-1)[0] < 60:
+            intervalText = ` ${expected_interval.slice(-1)[0]} seconds`;
+            break;
+          case expected_interval.slice(-1)[0] >= 60 && expected_interval.slice(-1)[0] < 3600:
+            const minutes = Math.floor(expected_interval.slice(-1)[0] / 60);
+            intervalText = ` ${minutes} minute${minutes > 1 ? 's' : ''}`;
+            break;
+          case expected_interval.slice(-1)[0] >= 3600:
+            const hours = Math.floor(expected_interval.slice(-1)[0] / 3600);
+            intervalText = ` ${hours} hour${hours > 1 ? 's' : ''}`;
+            break;
+          default:
+            intervalText = '';
+          }
+          setLastInterval(intervalText);
+
         const [hours, minutes, seconds] = lastTime.split(':');
         const dateObj = new Date();
         dateObj.setHours(hours, minutes, seconds);
@@ -39,7 +56,7 @@ const Sidebar = ({ user }) => {
         const hoursDiff = Math.floor(timeDiff / (60 * 60 * 1000));
         const minutesDiff = Math.floor((timeDiff % (60 * 60 * 1000)) / (60 * 1000));
         const secondsDiff = Math.floor((timeDiff % (60 * 1000)) / 1000);
-        const timeSinceLastEntry = `${hoursDiff} hours, ${minutesDiff} minutes`;
+        const timeSinceLastEntry = `${hoursDiff} hours, ${minutesDiff} minutes, ${secondsDiff} seconds`;
         setTimeSinceLastEntry(timeSinceLastEntry);
         setTotal(rows.length);
   
@@ -70,8 +87,6 @@ const Sidebar = ({ user }) => {
     };
     fetchLogData();
   }, []);
-  
-  
 
   const clearDatbase = async () => {
     const confirmDelete = window.confirm('Are you sure you want to clear all records? This action cannot be undone.');
