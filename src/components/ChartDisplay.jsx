@@ -96,14 +96,33 @@ const ChartDisplay = () => {
                   let label = context.dataset.label;
                   label += chartData.values[dex];
                   if (chartData.type[dex] === '0') {
-                      label += "\n Requested by ";
-                      label+= chartData.user[dex];
+                    label += "\n Requested by ";
+                    label+= chartData.user[dex];
+                  } else {
+                    let interval = chartData.interval[dex];
+                    let intervalStr = '';
+                
+                    if (interval >= 3600) {
+                      const hours = Math.floor(interval / 3600);
+                      intervalStr += `${hours} hour${hours > 1 ? 's' : ''}`;
+                      interval %= 3600;
+                    }
+                
+                    if (interval >= 60) {
+                      const minutes = Math.floor(interval / 60);
+                      if (intervalStr) intervalStr += ' ';
+                      intervalStr += `${minutes} minute${minutes > 1 ? 's' : ''}`;
+                      interval %= 60;
+                    }
+                
+                    if (interval > 0) {
+                      if (intervalStr) intervalStr += ' ';
+                      intervalStr += `${interval} second${interval > 1 ? 's' : ''}`;
+                    }
+                
+                    label += `, every ${intervalStr}`;
                   }
-                  else{
-                    label += ", every "
-                    label += chartData.interval[dex]
-                    label += "m"
-                  }
+                
                   return label;
                 },
                 afterLabel: function(context)
