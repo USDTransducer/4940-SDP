@@ -32,18 +32,38 @@ const Systemlog = () => {
   };
 
   const getMessage = (log) => {
-    const { date, time, type, interval, user} = log;
+    const { date, time, type, interval, user } = log;
     switch (type) {
       case '-1':
         return <p><span className="text-blue-500">{time}</span>: Reading requested by {user} </p>;
       case '1':
-        return <p><span className="text-blue-500">{time}</span>: Interval changed to {interval} by {user}</p>;
+        let intervalText;
+        let convertedInterval;
+        switch (true) {
+          case interval < 60:
+            convertedInterval = interval;
+            intervalText = ' seconds';
+            break;
+          case interval >= 60 && interval < 3600:
+            convertedInterval = interval / 60;
+            intervalText = ' minutes';
+            break;
+          case interval >= 3600:
+            convertedInterval = interval / 3600;
+            intervalText = ' hours';
+            break;
+          default:
+            intervalText = '';
+        }
+        return <p><span className="text-blue-500">{time}</span>: Interval changed to {convertedInterval}{intervalText} by {user}</p>;
       case '2':
         return <p><span className="text-blue-500">{time}</span>: Database cleared by {user}</p>;
       default:
         return '';
     }
   };
+  
+  
 
   const handleToggleRow = (date) => {
     if (expandedRows.includes(date)) {
