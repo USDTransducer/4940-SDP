@@ -154,7 +154,7 @@ const Sidebar = ({ user }) => {
     
     <div class="Sidebar w-full max-w-sm p-4 border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700" style={{backgroundColor: "#4B5563"}} >
         <h5 class="mb-3 text-base font-semibold text-white md:text-xl dark:text-white">
-            Device: Arduino Nano RP2040 Connect <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
+            Device: Arduino MKR Wi-Fi 1010 <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
         </a>
         </h5>
 
